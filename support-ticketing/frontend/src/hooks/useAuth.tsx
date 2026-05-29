@@ -15,19 +15,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check if token exists before calling /auth/me
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      setLoading(false);
+      return;
+    }
     api.get('/auth/me')
       .then(res => { if (res.data.loggedIn) setUser(res.data.username); })
-      .catch(() => {})
+      .catch(() => { localStorage.removeItem('auth_token'); })
       .finally(() => setLoading(false));
   }, []);
 
   const login = async (username: string, password: string) => {
     const res = await api.post('/auth/login', { username, password });
+    localStorage.setItem('auth_token', res.data.token); // store JWT
     setUser(res.data.username);
   };
 
   const logout = async () => {
     await api.post('/auth/logout');
+    localStorage.removeItem('auth_token'); // clear JWT
     setUser(null);
   };
 
