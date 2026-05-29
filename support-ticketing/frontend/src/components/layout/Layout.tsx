@@ -32,7 +32,8 @@ export default function Layout() {
           src="https://easydatagroup.com/img/edi-logo.svg"
           alt="Easy Data Integration"
           className="h-10 w-auto"
-          style={{ filter: 'brightness(0) invert(1)' }}        />
+          style={{ filter: 'brightness(0) invert(1)' }}
+        />
       </div>
 
       {/* Nav */}
@@ -52,10 +53,12 @@ export default function Layout() {
       {/* User section */}
       <div className="px-3 pb-4 border-t border-navy-800 pt-4">
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-navy-800 mb-2">
-          <div className="w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center shrink-0">
-            <span className="text-white text-xs font-bold">
-              {user?.charAt(0).toUpperCase()}
-            </span>
+          <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
+            <img
+              src="https://easydatagroup.com/img/pattern.png"
+              alt="avatar"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-white text-xs font-medium truncate">{user}</p>
@@ -95,8 +98,12 @@ export default function Layout() {
               <p className="text-sm font-medium text-navy-800">{user}</p>
               <p className="text-xs text-navy-400">Administrator</p>
             </div>
-            <div className="w-9 h-9 rounded-xl bg-navy-100 flex items-center justify-center">
-              <span className="text-navy-700 text-sm font-bold">{user?.charAt(0).toUpperCase()}</span>
+            <div className="w-9 h-9 rounded-xl overflow-hidden">
+              <img
+                src="https://easydatagroup.com/img/pattern.png"
+                alt="avatar"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </header>
