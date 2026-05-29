@@ -1,17 +1,24 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://backend-supportgsheets.onrender.com',
-  withCredentials: true,
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
+  withCredentials: false, // no longer needed for JWT
   headers: { 'Content-Type': 'application/json' },
+});
+
+// Attach token to every request
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('auth_token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
 });
 
 api.interceptors.response.use(
   res => res,
   err => {
     if (err.response?.status === 401) {
-      const isLoginRoute = window.location.pathname === '/login';
-      if (!isLoginRoute) {
+      localStorage.removeItem('auth_token');
+      if (window.location.pathname !== '/login') {
         window.location.href = '/login';
       }
     }
